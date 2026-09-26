@@ -1,0 +1,1440 @@
+:root {
+  --bg-app: #0b1120;
+  --bg-panel: #111827;
+  --bg-panel-elevated: #1e293b;
+  --bg-canvas: #0f172a;
+  --border-color: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-blue: #38bdf8;
+  --accent-teal: #14b8a6;
+  --accent-green: #22c55e;
+  --accent-amber: #f59e0b;
+  --accent-red: #ef4444;
+  --accent-purple: #a855f7;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-app);
+  color: var(--text-main);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ==================== ШАПКА ЛАБОРАТОРИИ ==================== */
+.top-navbar {
+  height: 58px;
+  background: linear-gradient(90deg, #0f172a 0%, #131c31 100%);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  flex-shrink: 0;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0ea5e9, #10b981);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.35);
+}
+
+.brand-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wit-badge {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(168, 85, 247, 0.2);
+  color: #d8b4fe;
+  border: 1px solid rgba(168, 85, 247, 0.45);
+  padding: 2px 7px;
+  border-radius: 99px;
+}
+
+.brand-subtitle {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.offline-pill {
+  font-size: 11.5px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  padding: 5px 11px;
+  border-radius: 99px;
+  font-weight: 600;
+}
+
+.stat-pill {
+  font-size: 12px;
+  background: var(--bg-panel-elevated);
+  border: 1px solid var(--border-color);
+  padding: 5px 11px;
+  border-radius: 8px;
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.nav-btn {
+  background: var(--bg-panel-elevated);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.nav-btn:hover {
+  border-color: var(--accent-blue);
+  background: #26354d;
+}
+
+/* ==================== ОСНОВНАЯ СЕТКА (3 КОЛОНКИ) ==================== */
+.workspace-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 255px 1fr 410px;
+  overflow: hidden;
+}
+
+/* ==================== ЛЕВАЯ КОЛОНКА: КАТАЛОГ УРОКОВ ==================== */
+.sidebar-projects {
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-header h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.progress-counter {
+  font-size: 11px;
+  color: var(--accent-green);
+  font-weight: 700;
+}
+
+.projects-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.project-nav-item {
+  width: 100%;
+  text-align: left;
+  background: rgba(30, 41, 59, 0.55);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px;
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  transition: all 0.15s;
+}
+
+.project-nav-item:hover {
+  background: var(--bg-panel-elevated);
+  border-color: #475569;
+}
+
+.project-nav-item.active {
+  background: rgba(14, 165, 233, 0.16);
+  border-color: var(--accent-blue);
+  box-shadow: inset 3px 0 0 var(--accent-blue);
+}
+
+.proj-icon {
+  font-size: 20px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.proj-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.proj-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+
+.proj-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag-badge, .tag-diff, .tag-done {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.tag-badge {
+  background: rgba(56, 189, 248, 0.15);
+  color: #7dd3fc;
+}
+
+.tag-diff {
+  background: rgba(148, 163, 184, 0.15);
+  color: #cbd5e1;
+}
+
+.tag-done {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+/* ==================== ЦЕНТРАЛЬНАЯ КОЛОНКА: ВИРТУАЛЬНАЯ ЛАБОРАТОРИЯ ==================== */
+.center-workbench {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-canvas);
+  overflow: hidden;
+}
+
+.workbench-toolbar {
+  padding: 9px 14px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.project-headline h2 {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.project-headline span {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.sim-controls {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.btn-primary-run {
+  background: linear-gradient(135deg, #16a34a, #059669);
+  color: #fff;
+  border: none;
+  padding: 7px 15px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 12.5px;
+  cursor: pointer;
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.35);
+  transition: transform 0.1s;
+}
+
+.btn-primary-run:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #22c55e, #10b981);
+}
+
+.btn-danger-stop {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: #fff;
+  border: none;
+  padding: 7px 15px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.btn-tool {
+  background: var(--bg-panel-elevated);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-tool:hover {
+  border-color: var(--accent-blue);
+}
+
+.btn-tool.btn-broken-demo {
+  border-color: rgba(245, 158, 11, 0.55);
+  color: #fcd34d;
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.btn-tool.btn-broken-demo:hover {
+  background: rgba(245, 158, 11, 0.22);
+}
+
+.btn-active-toggle {
+  background: rgba(56, 189, 248, 0.2) !important;
+  border-color: var(--accent-blue) !important;
+  color: #7dd3fc !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Подпанель инструментов: цвет провода + добавление деталей */
+.sub-toolbar {
+  padding: 6px 14px;
+  background: #0d1526;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11.5px;
+}
+
+.wire-palette {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wire-color-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.wire-color-swatch.active {
+  border-color: #fff;
+  transform: scale(1.18);
+}
+
+.comp-adder select {
+  background: var(--bg-panel-elevated);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 11.5px;
+}
+
+/* Статус-баннер диагностики над холстом */
+.circuit-status-banner {
+  padding: 7px 14px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.circuit-status-banner.status-ok {
+  background: rgba(34, 197, 94, 0.1);
+  color: #86efac;
+}
+
+.circuit-status-banner.status-error {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}
+
+.banner-link-btn {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fff;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ==================== ИНТЕРАКТИВНЫЙ ХОЛСТ СХЕМЫ ==================== */
+.circuit-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.workbench-canvas {
+  width: 100%;
+  height: 100%;
+  max-width: 860px;
+  max-height: 470px;
+  aspect-ratio: 860 / 470;
+  position: relative;
+  background: radial-gradient(circle at center, #131e36 0%, #0b1222 100%);
+  border: 1px solid #293850;
+  border-radius: 12px;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+  user-select: none;
+}
+
+.wires-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: all;
+}
+
+.wire-group {
+  cursor: pointer;
+}
+
+.wire-group:hover .wire-Main {
+  stroke-width: 6;
+  filter: drop-shadow(0 0 6px #fff);
+}
+
+.components-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Плата Arduino Uno / ESP32 */
+.mcu-board {
+  position: absolute;
+  left: 22px;
+  top: 38px;
+  width: 220px;
+  height: 396px;
+  border-radius: 14px;
+  padding: 12px;
+  color: #fff;
+  pointer-events: auto;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mcu-arduino {
+  background: linear-gradient(155deg, #0284c7 0%, #0369a1 60%, #075985 100%);
+  border: 2px solid #38bdf8;
+}
+
+.mcu-esp32 {
+  background: linear-gradient(155deg, #1e293b 0%, #0f172a 100%);
+  border: 2px solid #a855f7;
+}
+
+.mcu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mcu-chip-badge {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.mcu-power-led {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #64748b;
+}
+
+.mcu-power-led.power-on {
+  background: rgba(34, 197, 94, 0.25);
+  color: #4ade80;
+  box-shadow: 0 0 10px #22c55e;
+}
+
+.mcu-body-art {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.usb-port {
+  width: 54px;
+  height: 36px;
+  background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  border: 2px solid #e2e8f0;
+}
+
+.mcu-main-ic {
+  background: #0f172a;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  padding: 14px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mcu-main-ic span {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.mcu-main-ic small {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.mcu-status-row {
+  display: flex;
+  gap: 8px;
+}
+
+.BuiltIn-led {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.led-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #475569;
+}
+
+.led-builtin-on .led-dot {
+  background: #facc15;
+  box-shadow: 0 0 10px #facc15;
+}
+
+.led-tx-on .led-dot {
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+.mcu-hint-footer {
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(0, 0, 0, 0.22);
+  padding: 6px 8px;
+  border-radius: 6px;
+  line-height: 1.3;
+}
+
+/* Пины (контакты) на плате и компонентах */
+.pin-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: #0f172a;
+  border: 2px solid #94a3b8;
+  color: #f8fafc;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 10;
+  transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
+}
+
+.pin-node:hover {
+  transform: translate(-50%, -50%) scale(1.14);
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+}
+
+.pin-node.pin-selected {
+  border-color: #facc15;
+  background: #422006;
+  box-shadow: 0 0 12px #facc15;
+  transform: translate(-50%, -50%) scale(1.18);
+}
+
+.pin-node.pin-active-signal {
+  border-color: #4ade80;
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.65);
+}
+
+.pin-gnd {
+  border-color: #3b82f6;
+  background: #172554;
+}
+
+.pin-power {
+  border-color: #ef4444;
+  background: #450a0a;
+}
+
+.pin-hole {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f8fafc;
+  display: inline-block;
+}
+
+/* Карточки электронных компонентов */
+.comp-card {
+  position: absolute;
+  background: rgba(30, 41, 59, 0.92);
+  border: 1.5px solid #475569;
+  border-radius: 10px;
+  pointer-events: auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+.comp-drag-handle {
+  padding: 4px 8px;
+  background: rgba(15, 23, 42, 0.75);
+  border-bottom: 1px solid #334155;
+  border-radius: 9px 9px 0 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #e2e8f0;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.comp-Config-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+/* Резистор */
+.comp-resistor {
+  width: 136px;
+  height: 58px;
+}
+
+.resistor-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 12px;
+}
+
+.resistor-lead {
+  flex: 1;
+  height: 3px;
+  background: #94a3b8;
+}
+
+.resistor-body {
+  width: 64px;
+  height: 18px;
+  background: #d6bc8b;
+  border-radius: 6px;
+  border: 1px solid #a1804c;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0 4px;
+}
+
+.r-band {
+  width: 5px;
+  height: 100%;
+  display: inline-block;
+}
+
+/* Светодиод (LED) */
+.comp-led {
+  width: 104px;
+  height: 98px;
+}
+
+.led-visual-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.led-bulb {
+  width: 36px;
+  height: 42px;
+  border-radius: 18px 18px 6px 6px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s;
+}
+
+.led-red { background: rgba(239, 68, 68, 0.35); }
+.led-green { background: rgba(34, 197, 94, 0.35); }
+.led-yellow { background: rgba(250, 204, 21, 0.35); }
+.led-blue { background: rgba(56, 189, 248, 0.35); }
+
+.led-red.led-glow-on {
+  background: #ef4444;
+  box-shadow: 0 0 28px 8px rgba(239, 68, 68, var(--led-alpha, 1));
+  border-color: #fff;
+}
+
+.led-green.led-glow-on {
+  background: #22c55e;
+  box-shadow: 0 0 28px 8px rgba(34, 197, 94, var(--led-alpha, 1));
+  border-color: #fff;
+}
+
+.led-yellow.led-glow-on {
+  background: #facc15;
+  box-shadow: 0 0 28px 8px rgba(250, 204, 21, var(--led-alpha, 1));
+  border-color: #fff;
+}
+
+.led-blue.led-glow-on {
+  background: #38bdf8;
+  box-shadow: 0 0 28px 8px rgba(56, 189, 248, var(--led-alpha, 1));
+  border-color: #fff;
+}
+
+.led-burned {
+  background: #1e293b !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.85) !important;
+}
+
+.burned-icon {
+  font-size: 20px;
+  animation: pulseShake 0.4s infinite alternate;
+}
+
+@keyframes pulseShake {
+  from { transform: scale(0.95) rotate(-5deg); }
+  to { transform: scale(1.15) rotate(5deg); }
+}
+
+.led-legs {
+  display: flex;
+  justify-content: space-between;
+  width: 54px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #cbd5e1;
+  margin-top: 2px;
+}
+
+/* Тактовая кнопка */
+.comp-button {
+  width: 112px;
+  height: 92px;
+}
+
+.button-visual-wrap {
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.tactile-btn {
+  width: 100%;
+  height: 46px;
+  border-radius: 8px;
+  background: #334155;
+  border: 2px solid #64748b;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: 9.5px;
+  font-weight: 800;
+}
+
+.tactile-btn.btn-pressed {
+  background: #16a34a;
+  border-color: #4ade80;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+}
+
+.btn-cap {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 2px solid #fca5a5;
+}
+
+/* Датчики с ползунками */
+.comp-sensor {
+  width: 145px;
+  height: 112px;
+}
+
+.sensor-control-body {
+  padding: 7px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sensor-value-badge {
+  font-size: 11px;
+  background: rgba(15, 23, 42, 0.7);
+  padding: 3px 6px;
+  border-radius: 5px;
+  text-align: center;
+  color: #7dd3fc;
+}
+
+.sensor-value-badge.badge-hot {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+}
+
+.sensor-slider {
+  width: 100%;
+  cursor: pointer;
+  accent-color: #38bdf8;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5px;
+  color: #94a3b8;
+}
+
+/* Сервопривод */
+.comp-servo {
+  width: 136px;
+  height: 114px;
+}
+
+.servo-visual-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 72px;
+}
+
+.servo-casing {
+  width: 78px;
+  height: 44px;
+  background: #1d4ed8;
+  border: 2px solid #60a5fa;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.servo-horn {
+  width: 66px;
+  height: 12px;
+  background: #f8fafc;
+  border-radius: 99px;
+  position: absolute;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.servo-pivot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ef4444;
+  z-index: 2;
+}
+
+/* Водяной насос (Помпа) */
+.comp-pump {
+  width: 136px;
+  height: 110px;
+}
+
+.comp-pump.pump-running {
+  border-color: #38bdf8;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.45);
+}
+
+.pump-visual-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 68px;
+  gap: 4px;
+}
+
+.pump-impeller {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.pump-impeller.spin-active {
+  animation: spin360 0.7s linear infinite;
+}
+
+@keyframes spin360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.pump-status {
+  font-size: 10px;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+/* LCD Дисплей 16x2 */
+.comp-lcd {
+  width: 184px;
+  height: 108px;
+}
+
+.lcd-screen {
+  margin: 8px 10px;
+  height: 56px;
+  background: #1e3a2f;
+  border: 3px solid #334155;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #86efac;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.lcd-screen.lcd-backlight-on {
+  background: #166534;
+  color: #dcfce7;
+  box-shadow: inset 0 0 12px rgba(74, 222, 128, 0.45);
+}
+
+/* ==================== НИЖНЯЯ ЧАСТЬ ЦЕНТРА: РЕДАКТОР КОДА И SERIAL MONITOR ==================== */
+.code-and-serial-grid {
+  height: 235px;
+  border-top: 1px solid var(--border-color);
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  background: var(--bg-panel);
+  flex-shrink: 0;
+}
+
+.code-editor-pane {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.pane-header {
+  padding: 6px 12px;
+  background: #0d1526;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editor-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  background: #090e1a;
+}
+
+.line-numbers {
+  width: 34px;
+  padding: 10px 6px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: #475569;
+  background: #0d1526;
+  user-select: none;
+  overflow: hidden;
+}
+
+.code-textarea {
+  flex: 1;
+  background: transparent;
+  color: #e2e8f0;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  resize: none;
+  overflow-y: auto;
+}
+
+.serial-pane {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.serial-output {
+  flex: 1;
+  padding: 8px 10px;
+  background: #050811;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: #34d399;
+  overflow-y: auto;
+}
+
+.serial-line {
+  margin-bottom: 3px;
+}
+
+.serial-time {
+  color: #64748b;
+  margin-right: 4px;
+}
+
+/* ==================== ПРАВАЯ КОЛОНКА: ТЕОРИЯ, НАСТАВНИК ОШИБОК И ЧЕЛЛЕНДЖ ==================== */
+.right-education-panel {
+  background: var(--bg-panel);
+  border-left: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.right-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  background: #0d1526;
+}
+
+.right-tab-btn {
+  flex: 1;
+  padding: 10px 6px;
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.right-tab-btn.active {
+  color: var(--accent-blue);
+  border-bottom-color: var(--accent-blue);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.tab-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 99px;
+}
+
+.badge-ok {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+.badge-alert {
+  background: #ef4444;
+  color: #fff;
+}
+
+.right-tab-pane {
+  display: none;
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+}
+
+.right-tab-pane.active {
+  display: block;
+}
+
+/* Стили образовательного контента */
+.lesson-goal-box {
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.goal-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #38bdf8;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.goal-text {
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.lesson-components-box {
+  margin-bottom: 12px;
+}
+
+.section-mini-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.comp-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.comp-pill {
+  font-size: 11px;
+  background: var(--bg-panel-elevated);
+  border: 1px solid var(--border-color);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.lesson-theory-body {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #e2e8f0;
+  margin-bottom: 14px;
+}
+
+.lesson-theory-body h4 {
+  font-size: 13.5px;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.lesson-theory-body p {
+  margin-bottom: 8px;
+}
+
+.lesson-theory-body ul {
+  padding-left: 18px;
+  margin-bottom: 8px;
+}
+
+.lesson-theory-body code {
+  background: #1e293b;
+  color: #7dd3fc;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+
+.theory-callout {
+  padding: 9px 11px;
+  border-radius: 8px;
+  margin: 8px 0;
+  font-size: 12px;
+}
+
+.theory-callout.warning {
+  background: rgba(245, 158, 11, 0.13);
+  border-left: 3px solid #f59e0b;
+  color: #fde68a;
+}
+
+.theory-callout.info {
+  background: rgba(56, 189, 248, 0.12);
+  border-left: 3px solid #38bdf8;
+  color: #bae6fd;
+}
+
+.lesson-steps-box h4 {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.steps-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+
+.step-item {
+  display: flex;
+  gap: 8px;
+  background: rgba(30, 41, 59, 0.6);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.step-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.solution-explain-box {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+/* Диагностические карточки ошибок */
+.diagnostic-card {
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid;
+}
+
+.diag-danger {
+  background: rgba(239, 68, 68, 0.16);
+  border-color: #ef4444;
+}
+
+.diag-error {
+  background: rgba(249, 115, 22, 0.14);
+  border-color: #f97316;
+}
+
+.diag-warning {
+  background: rgba(234, 179, 8, 0.14);
+  border-color: #eab308;
+}
+
+.diag-badge {
+  font-size: 10px;
+  font-weight: 800;
+  display: inline-block;
+  margin-bottom: 4px;
+  color: #fca5a5;
+}
+
+.diag-header h5 {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.diag-explanation {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #e2e8f0;
+}
+
+.mentor-success-card {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.mentor-icon {
+  font-size: 26px;
+}
+
+.mentor-tip {
+  margin-top: 8px;
+  color: #94a3b8;
+  font-size: 11.5px;
+}
+
+/* Вкладка Челленджа */
+.challenge-card {
+  background: var(--bg-panel-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.challenge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.challenge-xp {
+  background: rgba(250, 204, 21, 0.2);
+  color: #facc15;
+  font-weight: 800;
+  font-size: 11.5px;
+  padding: 3px 8px;
+  border-radius: 99px;
+}
+
+.challenge-desc {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #e2e8f0;
+  margin-bottom: 12px;
+}
+
+.btn-check-challenge {
+  width: 100%;
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.challenge-result {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.result-pass {
+  background: rgba(34, 197, 94, 0.18);
+  border: 1px solid #22c55e;
+  color: #bbf7d0;
+}
+
+.result-fail {
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid #f59e0b;
+  color: #fde68a;
+}

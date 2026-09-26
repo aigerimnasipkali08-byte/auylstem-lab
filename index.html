@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AuylSTEM Lab — Виртуальная STEM-лаборатория микроконтроллеров и робототехники</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Верхняя панель навигации -->
+  <header class="top-navbar">
+    <div class="brand-group">
+      <div class="brand-logo">⚡</div>
+      <div>
+        <div class="brand-title">
+          AuylSTEM Lab
+          <span class="wit-badge">WIT Teens Hackathon · Кейс №3</span>
+        </div>
+        <div class="brand-subtitle" id="appSubtitle">
+          Виртуальная STEM-лаборатория для школ без сложного оборудования
+        </div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <span class="offline-pill" id="offlineBadge">
+        ⚡ Офлайн-режим (0 МБ трафика · Работает при слабом интернете)
+      </span>
+      <span class="stat-pill" id="xpCounter" title="Очки опыта за выполненные лабораторные челленджи">0 XP</span>
+      <button class="nav-btn" id="langToggleBtn" title="Переключить язык интерфейса RU / KZ">🌐 RU / KZ</button>
+      <button class="nav-btn" id="exportProjectBtn" title="Сохранить схему и код в файл JSON">💾 Сохранить проект</button>
+    </div>
+  </header>
+
+  <!-- Основная трёхколоночная рабочая область -->
+  <main class="workspace-grid">
+    <!-- Левая колонка: Программа курса (8 лабораторных проектов от Blink до Агро-IoT) -->
+    <aside class="sidebar-projects">
+      <div class="sidebar-header">
+        <h3>Лабораторные работы</h3>
+        <span class="progress-counter" id="progressCounter">0 / 8 уроков</span>
+      </div>
+      <div class="projects-list" id="projectsList"></div>
+    </aside>
+
+    <!-- Центральная колонка: Виртуальный стенд сборки + Редактор кода Arduino + Монитор порта -->
+    <section class="center-workbench">
+      <!-- Панель управления симуляцией -->
+      <div class="workbench-toolbar">
+        <div class="project-headline">
+          <h2 id="currentProjectTitle">Урок 1: Управление светодиодом (Blink)</h2>
+          <span id="currentProjectCategory">Основы электроники · Arduino Uno · 15 мин</span>
+        </div>
+        <div class="sim-controls">
+          <button class="btn-primary-run" id="runSimBtn">▶ Запустить симуляцию</button>
+          <button class="btn-danger-stop hidden" id="stopSimBtn">⏹ Остановить</button>
+          <button class="btn-tool" id="autoWireBtn" title="Автоматически собрать правильную схему урока">🪄 Собрать по схеме</button>
+          <button class="btn-tool btn-broken-demo" id="brokenDemoBtn" title="Демо для жюри: смоделировать типичную ошибку ученика и показать работу умного наставника">⚠️ Смоделировать ошибку ученика</button>
+          <button class="btn-tool" id="toggleHintsBtn" title="Показать пунктирные подсказки подключения проводов">👁️ Подсказки</button>
+          <button class="btn-tool" id="clearWiresBtn" title="Удалить все провода для самостоятельной сборки с нуля">✂️ Очистить провода</button>
+        </div>
+      </div>
+
+      <!-- Подпанель выбора цвета провода и добавления компонентов -->
+      <div class="sub-toolbar">
+        <div class="wire-palette">
+          <span>Цвет провода:</span>
+          <button class="wire-color-swatch active" style="background:#ef4444" data-color="#ef4444" title="Красный (Питание / Сигнал)"></button>
+          <button class="wire-color-swatch" style="background:#3b82f6" data-color="#3b82f6" title="Синий (Земля GND)"></button>
+          <button class="wire-color-swatch" style="background:#22c55e" data-color="#22c55e" title="Зелёный"></button>
+          <button class="wire-color-swatch" style="background:#eab308" data-color="#eab308" title="Жёлтый"></button>
+          <button class="wire-color-swatch" style="background:#a855f7" data-color="#a855f7" title="Фиолетовый"></button>
+          <button class="wire-color-swatch" style="background:#06b6d4" data-color="#06b6d4" title="Голубой"></button>
+          <span style="margin-left: 8px; color: #94a3b8;">(Клик по пину → протянуть провод · Клик по проводу → удалить)</span>
+        </div>
+        <div class="comp-adder">
+          <select id="addComponentSelect">
+            <option value="">➕ Добавить компонент на стол...</option>
+            <option value="led">💡 Светодиод (LED)</option>
+            <option value="resistor">🟫 Резистор (220 Ом)</option>
+            <option value="button">🔘 Тактовая кнопка</option>
+            <option value="ldr">☀️ Фоторезистор (Датчик света)</option>
+            <option value="temp_sensor">🌡️ Датчик температуры (°C)</option>
+            <option value="ultrasonic">📡 Ультразвуковой датчик HC-SR04</option>
+            <option value="soil_sensor">🌱 Датчик влажности почвы</option>
+            <option value="servo">⚙️ Сервопривод SG90</option>
+            <option value="pump">💧 Водяной насос (Помпа)</option>
+            <option value="lcd">📟 Экран LCD 16x2</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Живой статус-баннер проверки схемы -->
+      <div class="circuit-status-banner status-ok" id="circuitStatusBanner">
+        <span>✅ Схема готова к работе!</span>
+      </div>
+
+      <!-- Интерактивный холст виртуальной лаборатории -->
+      <div class="circuit-container" id="circuitContainer"></div>
+
+      <!-- Нижняя панель: Редактор кода C++ Arduino и Монитор последовательного порта -->
+      <div class="code-and-serial-grid">
+        <div class="code-editor-pane">
+          <div class="pane-header">
+            <span>💻 Код программы (Arduino C++ / ESP32)</span>
+            <span>Можно менять пины, delay() и пороги датчиков!</span>
+          </div>
+          <div class="editor-body">
+            <div class="line-numbers" id="lineNumbers"><div>1</div></div>
+            <textarea class="code-textarea" id="codeEditor" spellcheck="false"></textarea>
+          </div>
+        </div>
+
+        <div class="serial-pane">
+          <div class="pane-header">
+            <span>📟 Монитор порта (Serial Monitor · 9600 бод)</span>
+            <button class="btn-tool" id="clearSerialBtn" style="padding: 2px 7px; font-size: 10.5px;">Очистить</button>
+          </div>
+          <div class="serial-output" id="serialOutput"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Правая колонка: Образовательный модуль (Теория + Умный наставник ошибок + Челлендж) -->
+    <aside class="right-education-panel">
+      <div class="right-tabs">
+        <button class="right-tab-btn active" data-tab="theory" id="tabBtnTheory">1. Теория и шаги</button>
+        <button class="right-tab-btn" data-tab="mentor">
+          <span id="tabBtnMentorLabel">2. Разбор ошибок</span>
+          <span class="tab-badge badge-ok" id="mentorCountBadge">0</span>
+        </button>
+        <button class="right-tab-btn" data-tab="challenge" id="tabBtnChallenge">3. Задание</button>
+      </div>
+
+      <!-- Вкладка 1: Теория, цель, компоненты, пошаговая сборка -->
+      <div class="right-tab-pane active" data-pane="theory" id="theoryPanelContent"></div>
+
+      <!-- Вкладка 2: Интеллектуальная диагностика ошибок схемы и кода -->
+      <div class="right-tab-pane" data-pane="mentor">
+        <div style="margin-bottom: 10px; font-size: 12px; color: #94a3b8;">
+          <strong>🧠 Smart STEM Наставник</strong> автоматически проверяет замкнутость цепи, наличие защитных резисторов, полярность и соответствие пинов в коде:
+        </div>
+        <div id="diagnosticsList"></div>
+      </div>
+
+      <!-- Вкладка 3: Практическое задание для самостоятельного выполнения -->
+      <div class="right-tab-pane" data-pane="challenge">
+        <div class="challenge-card">
+          <div class="challenge-header">
+            <h4 id="challengeTitle">Челлендж</h4>
+            <span class="challenge-xp" id="challengeXpBadge">+100 XP</span>
+          </div>
+          <p class="challenge-desc" id="challengeDesc"></p>
+          <button class="btn-check-challenge" id="checkChallengeBtn">✅ Проверить задание</button>
+          <div id="challengeFeedback"></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="js/projects.js"></script>
+  <script src="js/circuit-engine.js"></script>
+  <script src="js/arduino-interpreter.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
